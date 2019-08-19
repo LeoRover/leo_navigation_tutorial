@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>leo_navigation</name>
+  <version>0.3.0</version>
+  <description>
+    This package provides LeoRover navigation.
+  </description>
+
+  <maintainer email="support@fictionlab.pl">fictionlab</maintainer>
+
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <exec_depend>robot_localization</exec_depend>
+  <exec_depend>urg_node</exec_depend>
+  
+  <exec_depend>leo_description</exec_depend>
+
+</package>

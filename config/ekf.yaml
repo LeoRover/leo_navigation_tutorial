@@ -1,0 +1,32 @@
+# https://github.com/cra-ros-pkg/robot_localization/blob/kinetic-devel/params/ekf_template.yaml
+
+frequency: 30
+sensor_timeout: 0.2
+two_d_mode: true
+transform_time_offset: 0.0
+transform_timeout: 0.0
+print_diagnostics: true
+debug: false
+publish_tf: true
+publish_acceleration: false
+
+map_frame: map
+odom_frame: odom
+base_link_frame: base_link
+world_frame: odom
+
+# x, y, z
+# roll, pitch, yaw
+# vx, vy, vz
+# vroll, vpitch, vyaw
+# ax, ay, az.
+
+twist0: /wheel_odom
+twist0_config: [false, false, false,
+                false, false, false,
+                true,  false, false,
+                false, false, true,
+                false, false, false]
+twist0_queue_size: 3
+twist0_rejection_threshold: 2
+twist0_nodelay: false
