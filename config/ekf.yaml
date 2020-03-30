@@ -21,12 +21,24 @@ world_frame: odom
 # vroll, vpitch, vyaw
 # ax, ay, az.
 
-twist0: /wheel_odom
+twist0: /wheel_odom_with_covariance
 twist0_config: [false, false, false,
                 false, false, false,
                 true,  false, false,
                 false, false, true,
                 false, false, false]
 twist0_queue_size: 3
-twist0_rejection_threshold: 2
+twist0_rejection_threshold: 20
 twist0_nodelay: false
+
+imu0: imu/data
+imu0_config: [false, false, false,
+              false, false,  false,
+              false, false, false,
+              false,  false,  true,
+              true,  false,  false]
+imu0_nodelay: false
+imu0_differential: false
+imu0_relative: true
+imu0_queue_size: 5
+imu0_remove_gravitational_acceleration: true

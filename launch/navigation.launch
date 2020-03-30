@@ -1,24 +1,31 @@
 <launch>
+  <arg name="output" 
+       default="screen"/>
 
-    <!-- <param name="robot_description" textfile="$(find leo_description)/urdf/leo_description.urdf" />
+  <node name="message_filter" 
+        pkg="leo_navigation" 
+        type="message_filter">
+    <rosparam command="load"
+              file="$(find leo_navigation)/config/covariances.yaml"/>
+  </node>
 
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" /> -->
+  <node name="imu_filter_node" 
+        pkg="imu_filter_madgwick" 
+        type="imu_filter_node"
+        output="$(arg output)">
+    <param name="use_mag" value="false"/>
+    <param name="publish_tf" value="false"/>
+    <param name="world_frame" value="nwu"/>
+    <param name="use_magnetic_field_msg" value="false"/>
+    <param name="stateless" value="false"/>
+  </node>
 
-    <node pkg="tf" type="static_transform_publisher" name="tf_base_link_to_laser" 
-    args="0.078 0 0.08 0 0 0 /base_link /laser 100" />
-
-    <node pkg="urg_node" type="urg_node" name="urg_node">
-        <param name="serial_port" value="/dev/ttyACM0"/>
-        <param name="serial_baud" value="115200"/>
-    </node>
-
-    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_node"
-    clear_params="true" output="screen">
-        <rosparam command="load" file="$(find leo_navigation)/config/ekf.yaml" />
-    </node>
-
-   <node pkg="hector_mapping" type="hector_mapping" name="hector_mapping" output="screen">
-        <rosparam command="load" file="$(find leo_navigation)/config/mapping.yaml" />
-   </node>
+  <node name="ekf_localization_node"
+        pkg="robot_localization"
+        type="ekf_localization_node"
+        clear_params="true"
+        output="$(arg output)">
+    <rosparam command="load" file="$(find leo_navigation)/config/ekf.yaml" />
+  </node>
 
 </launch>
