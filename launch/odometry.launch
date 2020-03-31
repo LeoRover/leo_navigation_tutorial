@@ -1,11 +1,10 @@
 <launch>
-  <arg name="output" 
-       default="screen"/>
+  <arg name="output" default="screen"/>
 
   <node name="message_filter" 
         pkg="leo_navigation" 
         type="message_filter">
-    <rosparam command="load"
+    <rosparam command="load" 
               file="$(find leo_navigation)/config/covariances.yaml"/>
   </node>
 
@@ -25,7 +24,7 @@
         type="ekf_localization_node"
         clear_params="true"
         output="$(arg output)">
-    <rosparam command="load" file="$(find leo_navigation)/config/ekf.yaml" />
+    <rosparam command="load" file="$(find leo_navigation)/config/ekf.yaml"/>
   </node>
 
 </launch>

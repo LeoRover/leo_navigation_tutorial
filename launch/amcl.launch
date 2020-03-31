@@ -1,0 +1,18 @@
+<launch>
+  <arg name="output" default="screen"/>
+  <arg name="map_file"/>
+ 
+  <node name="map_server"
+        pkg="map_server"
+        type="map_server"
+        args="$(arg map_file)"
+        output="$(arg output)"/>
+
+  <node name="amcl"
+        pkg="amcl"
+        type="amcl"
+        clear_params="true"
+        output="$(arg output)">
+    <rosparam command="load" file="$(find leo_navigation)/config/amcl.yaml"/>
+  </node>
+</launch>
