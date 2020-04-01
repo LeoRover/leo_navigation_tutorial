@@ -1,0 +1,20 @@
+# http://wiki.ros.org/costmap_2d#costmap_2d.2BAC8-layered.Parameters
+global_costmap:
+  global_frame: map
+  robot_base_frame: base_link
+  transform_tolerance: 0.2
+  update_frequency: 5.0
+  publish_frequency: 2.0
+  rolling_window: false
+  always_send_full_costmap: false
+
+  resolution: 0.05
+  width: 40
+  height: 40
+  origin_x: -20.0
+  origin_y: -20.0
+
+  plugins:
+    - {name: static_layer,      type: "costmap_2d::StaticLayer"}
+    - {name: obstacle_layer,    type: "costmap_2d::ObstacleLayer"}
+    - {name: inflation_layer,   type: "costmap_2d::InflationLayer"}
