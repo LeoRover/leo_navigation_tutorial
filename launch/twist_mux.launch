@@ -1,0 +1,24 @@
+<launch>
+  <arg name="cmd_vel_out" default="cmd_vel"/>
+
+  <node name="twist_mux"
+        pkg="twist_mux"
+        type="twist_mux"
+        output="screen">
+    <remap from="cmd_vel_out" to="$(arg cmd_vel_out)"/>
+    <rosparam command="load"
+              file="$(find leo_navigation)/config/twist_mux/topics.yaml"/>
+    <rosparam command="load"
+              file="$(find leo_navigation)/config/twist_mux/locks.yaml"/>
+  </node>
+
+  <node name="twist_marker"
+        pkg="twist_mux"
+        type="twist_marker">
+    <remap from="twist"  to="$(arg cmd_vel_out)"/>
+    <remap from="marker" to="twist_mux_marker"/>
+    <rosparam command="load"
+              file="$(find leo_navigation)/config/twist_mux/marker.yaml"/>
+  </node>
+
+</launch>

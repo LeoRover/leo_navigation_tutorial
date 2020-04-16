@@ -24,7 +24,8 @@
         type="ekf_localization_node"
         clear_params="true"
         output="$(arg output)">
-    <rosparam command="load" file="$(find leo_navigation)/config/ekf.yaml"/>
+    <rosparam command="load"
+              file="$(find leo_navigation)/config/robot_localization/ekf.yaml"/>
   </node>
 
 </launch>
