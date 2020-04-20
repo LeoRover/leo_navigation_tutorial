@@ -1,5 +1,6 @@
 <launch>
   <arg name="output" default="screen"/>
+  <arg name="3d" default="false"/>
 
   <node name="message_filter" 
         pkg="leo_navigation" 
@@ -8,7 +9,8 @@
               file="$(find leo_navigation)/config/covariances.yaml"/>
   </node>
 
-  <node name="imu_filter_node" 
+  <node if="$(arg 3d)"
+        name="imu_filter_node" 
         pkg="imu_filter_madgwick" 
         type="imu_filter_node"
         output="$(arg output)">
@@ -24,8 +26,12 @@
         type="ekf_localization_node"
         clear_params="true"
         output="$(arg output)">
-    <rosparam command="load"
-              file="$(find leo_navigation)/config/robot_localization/ekf.yaml"/>
+    <rosparam unless="$(arg 3d)"
+              command="load"
+              file="$(find leo_navigation)/config/robot_localization/ekf_2d.yaml"/>
+    <rosparam if="$(arg 3d)"
+              command="load"
+              file="$(find leo_navigation)/config/robot_localization/ekf_3d.yaml"/>
   </node>
 
 </launch>

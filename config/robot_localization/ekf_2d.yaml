@@ -31,7 +31,7 @@ twist0_queue_size: 3
 twist0_rejection_threshold: 15
 twist0_nodelay: false
 
-imu0: imu/data
+imu0: imu/data_raw
 imu0_config: [false, false, false,
               false, false,  false,
               false, false, false,
