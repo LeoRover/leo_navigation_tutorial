@@ -14,11 +14,8 @@
         pkg="imu_filter_madgwick" 
         type="imu_filter_node"
         output="$(arg output)">
-    <param name="use_mag" value="false"/>
-    <param name="publish_tf" value="false"/>
-    <param name="world_frame" value="nwu"/>
-    <param name="use_magnetic_field_msg" value="false"/>
-    <param name="stateless" value="false"/>
+    <rosparam command="load"
+              file="$(find leo_navigation)/config/imu_filter_node.yaml"/>
   </node>
 
   <node name="ekf_localization_node"

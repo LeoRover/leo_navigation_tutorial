@@ -1,0 +1,19 @@
+# http://wiki.ros.org/imu_filter_madgwick#Parameters
+
+gain: 0.1
+zeta: 0.0
+mag_bias_x: 0.0
+mag_bias_y: 0.0
+mag_bias_z: 0.0
+orientation_stddev: 0.0
+
+world_frame: nwu
+use_mag: false
+use_magnetic_field_msg: false
+publish_tf: false
+# fixed_frame: odom
+# reverse_tf: false
+constant_dt: 0.0
+publish_debug_topics: false
+stateless: false
+remove_gravity_vector: false
