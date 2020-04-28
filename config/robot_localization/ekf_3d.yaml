@@ -21,7 +21,7 @@ world_frame: odom
 # vroll, vpitch, vyaw
 # ax, ay, az.
 
-twist0: /wheel_odom_with_covariance
+twist0: wheel_odom_with_covariance
 twist0_config: [false, false, false,
                 false, false, false,
                 true,  false, false,
