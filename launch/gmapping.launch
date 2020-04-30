@@ -7,6 +7,6 @@
         clear_params="true"
         output="$(arg output)">
     <rosparam command="load" 
-              file="$(find leo_navigation)/config/gmapping.yaml"/>
+              file="$(find leo_navigation)/config/slam_gmapping.yaml"/>
   </node>
 </launch

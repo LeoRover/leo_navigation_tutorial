@@ -6,7 +6,7 @@
         pkg="leo_navigation" 
         type="message_filter">
     <rosparam command="load" 
-              file="$(find leo_navigation)/config/covariances.yaml"/>
+              file="$(find leo_navigation)/config/message_filter.yaml"/>
   </node>
 
   <node if="$(arg 3d)"
@@ -25,10 +25,10 @@
         output="$(arg output)">
     <rosparam unless="$(arg 3d)"
               command="load"
-              file="$(find leo_navigation)/config/robot_localization/ekf_2d.yaml"/>
+              file="$(find leo_navigation)/config/ekf_localization_node/ekf_2d.yaml"/>
     <rosparam if="$(arg 3d)"
               command="load"
-              file="$(find leo_navigation)/config/robot_localization/ekf_3d.yaml"/>
+              file="$(find leo_navigation)/config/ekf_localization_node/ekf_3d.yaml"/>
   </node>
 
 </launch>
