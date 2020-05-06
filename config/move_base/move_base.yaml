@@ -1,4 +1,4 @@
-# http://wiki.ros.org/move_base
+# http://wiki.ros.org/move_base#Parameters
 
 # General parameters
 controller_frequency: 10.0

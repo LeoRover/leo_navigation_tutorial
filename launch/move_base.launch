@@ -26,8 +26,8 @@
 
     <!-- planners -->
     <rosparam command="load"
-              file="$(find leo_navigation)/config/move_base/planners/base_local_planner.yaml"/>
+              file="$(find leo_navigation)/config/move_base/planners/local_planner.yaml"/>
     <rosparam command="load"
-              file="$(find leo_navigation)/config/move_base/planners/base_global_planner.yaml"/>
+              file="$(find leo_navigation)/config/move_base/planners/global_planner.yaml"/>
   </node>
 </launch>
