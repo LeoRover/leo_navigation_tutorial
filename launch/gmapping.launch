@@ -9,4 +9,4 @@
     <rosparam command="load" 
               file="$(find leo_navigation)/config/slam_gmapping.yaml"/>
   </node>
-</launch
+</launch>
