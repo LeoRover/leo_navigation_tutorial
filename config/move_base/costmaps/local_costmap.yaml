@@ -1,6 +1,6 @@
 # http://wiki.ros.org/costmap_2d#costmap_2d.2BAC8-layered.Parameters
 local_costmap:
-  global_frame: odom
+  global_frame: map
   robot_base_frame: base_link
   transform_tolerance: 0.2
   update_frequency: 5.0
