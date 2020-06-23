@@ -25,7 +25,7 @@ obstacle_layer:
   scan:
     topic: scan
     observation_persistance: 0.0
-    expected_update_rate: 0.15
+    expected_update_rate: 0.30
     data_type: LaserScan
     clearing: true
     marking: true
@@ -35,5 +35,5 @@ obstacle_layer:
 
 # http://wiki.ros.org/costmap_2d/hydro/inflation
 inflation_layer:
-  inflation_radius: 1.0
-  cost_scaling_factor: 10.0
+  inflation_radius: 0.3
+  cost_scaling_factor: 30.0

@@ -4,7 +4,7 @@ TrajectoryPlannerROS:
   # Robot configuration
   acc_lim_x: 0.5
   acc_lim_theta: 1.0
-  max_vel_x: 0.2
+  max_vel_x: 0.25
   min_vel_x: 0.1
   max_vel_theta: 0.5
   min_vel_theta: -0.5
@@ -15,19 +15,19 @@ TrajectoryPlannerROS:
   # Goal tolerance
   yaw_goal_tolerance: 0.1
   xy_goal_tolerance: 0.2
-  latch_xy_goal_tolerance: false
+  latch_xy_goal_tolerance: true
 
   # Forward simulation
-  sim_time: 1.0
-  sim_granularity: 0.025
+  sim_time: 3.0
+  sim_granularity: 0.05
   angular_sim_granularity: 0.025
   vx_samples: 3
   vtheta_samples: 20
 
   # Trajectory scoring
-  meter_scoring: false
-  pdist_scale: 0.6
-  gdist_scale: 0.8
+  meter_scoring: true
+  pdist_scale: 0.3
+  gdist_scale: 0.3
   occdist_scale: 0.01
   heading_lookahead: 0.325
   heading_scoring: false

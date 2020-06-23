@@ -2,8 +2,8 @@
 global_costmap:
   global_frame: map
   robot_base_frame: base_link
-  transform_tolerance: 0.2
-  update_frequency: 5.0
+  transform_tolerance: 0.5
+  update_frequency: 2.0
   publish_frequency: 2.0
   rolling_window: false
   always_send_full_costmap: false
