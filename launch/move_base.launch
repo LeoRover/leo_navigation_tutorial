@@ -1,14 +1,11 @@
 <launch>
-  <arg name="output" default="screen"/>
-
   <remap from="odom" to="odometry/filtered"/>
   <remap from="cmd_vel" to="nav_vel"/>
 
   <node name="move_base"
         pkg="move_base"
         type="move_base"
-        clear_params="true"
-        output="$(arg output)">
+        clear_params="true">
     <rosparam command="load"
               file="$(find leo_navigation)/config/move_base/move_base.yaml"/>
 

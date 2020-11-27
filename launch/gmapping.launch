@@ -1,11 +1,8 @@
 <launch>
-  <arg name="output" default="screen"/>
-
   <node name="gmapping"
         pkg="gmapping"
         type="slam_gmapping"
-        clear_params="true"
-        output="$(arg output)">
+        clear_params="true">
     <rosparam command="load" 
               file="$(find leo_navigation)/config/slam_gmapping.yaml"/>
   </node>
