@@ -13,7 +13,7 @@ static_layer:
 
 # http://wiki.ros.org/costmap_2d/hydro/obstacles
 obstacle_layer:
-  max_obstacle_height: 0.1
+  max_obstacle_height: 0.3
   obstacle_range: 2.5
   raytrace_range: 3.0
   track_unknown_space: false
@@ -29,8 +29,8 @@ obstacle_layer:
     data_type: LaserScan
     clearing: true
     marking: true
-    min_obstacle_height: -0.1
-    max_obstacle_height: 0.1
+    min_obstacle_height: 0.1
+    max_obstacle_height: 0.3
     inf_is_valid: false
 
 # http://wiki.ros.org/costmap_2d/hydro/inflation

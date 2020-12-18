@@ -48,6 +48,6 @@ odom_alpha4: 0.2
 
 # TF parameters
 odom_frame_id: odom
-base_frame_id: base_link
+base_frame_id: base_footprint
 global_frame_id: map
 tf_broadcast: true
