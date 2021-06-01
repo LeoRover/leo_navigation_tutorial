@@ -20,11 +20,11 @@ imu_lin_acc_cov = rospy.get_param(
     "~imu_linear_acceleration_covariance_diagonal")
 
 for i in range(6):
-    odom_msg.twist.covariance[i*6] = wheel_odom_cov[i]
+    odom_msg.twist.covariance[i*7] = wheel_odom_cov[i]
 
 for i in range(3):
-    imu_msg.angular_velocity_covariance[i*3] = imu_ang_vel_cov[i]
-    imu_msg.linear_acceleration_covariance[i*3] = imu_lin_acc_cov[i]
+    imu_msg.angular_velocity_covariance[i*4] = imu_ang_vel_cov[i]
+    imu_msg.linear_acceleration_covariance[i*4] = imu_lin_acc_cov[i]
 
 
 def imu_callback(gyro, accel):
