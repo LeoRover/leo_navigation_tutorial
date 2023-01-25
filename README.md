@@ -2,45 +2,11 @@
 
 This package was created as part of the [Autonomous Navigation tutorial] for Leo Rover. It provides configuration for SLAM and autonomous navigation for Leo Rover equipped with IMU and LiDAR sensors. 
 
-## Nodes
-
-* **`message_filter`**
-
-    Republishes wheel odometry and IMU data published by [leo_firmware] on message types accepted by the [robot_localization] package.
-
-    ### Published topics:
-
-    * **`wheel_odom_with_covariance`** (type: [geometry_msgs/TwistWithCovarianceStamped])
-
-    * **`imu/data_raw`** (type: [sensor_msgs/Imu])
-
-    ### Subscribed topics:
-
-    * **`wheel_odom`** (type: [geometry_msgs/TwistStamped])
-
-    * **`imu/gyro`** (type: [geometry_msgs/Vector3Stamped])
-
-    * **`imu/accel`** (type: [geometry_msgs/Vector3Stamped])
-
-    ### Parameters
-
-    * **`~wheel_odom_covariance_diagonal`** (`double[]`)
-
-        Diagonal of the covariance matrix for wheel odometry.
-
-    * **`~imu_angular_velocity_covariance_diagonal`** (`double[]`)
-
-        Diagonal of the covariance matrix for IMU angular velocity.
-
-    * **`~imu_linear_acceleration_covariance_diagonal`** (`double[]`)
-
-        Diagonal of the covariance matrix for IMU acceleration.
-
 ## Launch files
 
 * **`odometry.launch`** 
  
-    Starts the `message_filter` and `ekf_localization_node` from [robot_localization] which publishes the odometry based on Wheel encoders and IMU readings.
+    Starts the `ekf_localization_node` from [robot_localization] which publishes the odometry based on Wheel encoders and IMU readings.
 
     **Arguments:**
     * `three_d` (default: `false`)
