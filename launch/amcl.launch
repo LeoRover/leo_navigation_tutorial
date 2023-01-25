@@ -1,15 +1,15 @@
 <launch>
-  <arg name="map_file"/>
- 
+  <arg name="map_file" />
+
   <node name="map_server"
-        pkg="map_server"
-        type="map_server"
-        args="$(arg map_file)"/>
+    pkg="map_server"
+    type="map_server"
+    args="$(arg map_file)" />
 
   <node name="amcl"
-        pkg="amcl"
-        type="amcl"
-        clear_params="true">
-    <rosparam command="load" file="$(find leo_navigation)/config/amcl.yaml"/>
+    pkg="amcl"
+    type="amcl"
+    clear_params="true">
+    <rosparam command="load" file="$(find leo_navigation)/config/amcl.yaml" />
   </node>
 </launch>

@@ -1,30 +1,30 @@
 <launch>
-  <remap from="odom" to="odometry/filtered"/>
-  <remap from="cmd_vel" to="nav_vel"/>
+  <remap from="odom" to="odometry/filtered" />
+  <remap from="cmd_vel" to="nav_vel" />
 
   <node name="move_base"
-        pkg="move_base"
-        type="move_base"
-        clear_params="true">
+    pkg="move_base"
+    type="move_base"
+    clear_params="true">
     <rosparam command="load"
-              file="$(find leo_navigation)/config/move_base/move_base.yaml"/>
+      file="$(find leo_navigation)/config/move_base/move_base.yaml" />
 
     <!-- costmaps -->
     <rosparam command="load"
-              ns="global_costmap"
-              file="$(find leo_navigation)/config/move_base/costmaps/costmap_common.yaml"/>
+      ns="global_costmap"
+      file="$(find leo_navigation)/config/move_base/costmaps/costmap_common.yaml" />
     <rosparam command="load"
-              ns="local_costmap"
-              file="$(find leo_navigation)/config/move_base/costmaps/costmap_common.yaml"/>
+      ns="local_costmap"
+      file="$(find leo_navigation)/config/move_base/costmaps/costmap_common.yaml" />
     <rosparam command="load"
-              file="$(find leo_navigation)/config/move_base/costmaps/local_costmap.yaml"/>
+      file="$(find leo_navigation)/config/move_base/costmaps/local_costmap.yaml" />
     <rosparam command="load"
-              file="$(find leo_navigation)/config/move_base/costmaps/global_costmap.yaml"/>
+      file="$(find leo_navigation)/config/move_base/costmaps/global_costmap.yaml" />
 
     <!-- planners -->
     <rosparam command="load"
-              file="$(find leo_navigation)/config/move_base/planners/local_planner.yaml"/>
+      file="$(find leo_navigation)/config/move_base/planners/local_planner.yaml" />
     <rosparam command="load"
-              file="$(find leo_navigation)/config/move_base/planners/global_planner.yaml"/>
+      file="$(find leo_navigation)/config/move_base/planners/global_planner.yaml" />
   </node>
 </launch>
