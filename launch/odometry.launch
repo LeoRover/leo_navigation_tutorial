@@ -1,5 +1,5 @@
 <launch>
-  <arg name="three_d" default="false" />
+  <!-- <arg name="three_d" default="false" />
 
   <node if="$(arg three_d)"
     name="imu_filter_node"
@@ -19,6 +19,12 @@
     <rosparam if="$(arg three_d)"
       command="load"
       file="$(find leo_navigation)/config/ekf_localization_node/ekf_3d.yaml" />
+  </node> -->
+
+  <arg name="odom_topic" default="odometry_merged"/>
+
+  <node name="odom2tf" pkg="leo_navigation" type="odom2tf">
+    <param name="odom_topic" value="$(arg odom_topic)"/>
   </node>
 
 </launch>
