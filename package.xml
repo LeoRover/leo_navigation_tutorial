@@ -12,8 +12,6 @@
   <license>MIT</license>
 
   <buildtool_depend>catkin</buildtool_depend>
-  <exec_depend>robot_localization</exec_depend>
-  <exec_depend>imu_filter_madgwick</exec_depend>
   <exec_depend>slam_gmapping</exec_depend>
   <exec_depend>map_server</exec_depend>
   <exec_depend>amcl</exec_depend>
