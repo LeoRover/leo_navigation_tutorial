@@ -10,7 +10,7 @@ void odom_callback(const nav_msgs::OdometryConstPtr& odom){
   geometry_msgs::Pose odom_pose = odom->pose.pose;
   tf::poseMsgToTF(odom_pose, tf);
 
-  tf::StampedTransform stamped_tf(tf, odom->header.stamp, odom->header.frame_id, odom->child_frame_id);
+  tf::StampedTransform stamped_tf(tf, odom->header.stamp, odom->header.frame_id, "base_footprint");
 
   br.sendTransform(stamped_tf);
 }
