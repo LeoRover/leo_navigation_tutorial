@@ -21,5 +21,7 @@
   <exec_depend>global_planner</exec_depend>
   <exec_depend>twist_mux</exec_depend>
   <exec_depend>gmapping</exec_depend>
+  <depend>tf</depend>
+  <depend>nav_msgs</depend>
 
 </package>
