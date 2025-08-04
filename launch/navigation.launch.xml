@@ -1,0 +1,96 @@
+<launch version="0.1.1">
+
+  <arg name="localization" 
+    default="false" 
+    description="Whether to use SLAM Toolbox in mapping mode or AMCL for localization only" />
+  
+  <arg name="slam_params_file" 
+    default="$(find-pkg-share leo_nav)/config/slam_toolbox.yaml"
+    description="Path to the SLAM parameters file (used if localization is false)" />
+  
+  <arg name="amcl_params_file" 
+    default="$(find-pkg-share leo_nav)/config/amcl.yaml"
+    description="Path to the AMCL parameters file (used if localization is true)" />
+
+  <arg name="map_file" 
+    default="$(find-pkg-share leo_nav)/maps/empty_map.yaml"
+    description="Path to the map file (required for AMCL - when localization is true)" />
+
+  <arg name="use_stereo_camera" 
+    default="false"
+    description="Whether to enable stereo camera nodes" />
+
+  <arg unless="$(var use_stereo_camera)" name="navigation_params_file"
+    default="$(find-pkg-share leo_nav)/config/navigation.yaml"
+    description="Standard navigation config" />
+
+  <arg if="$(var use_stereo_camera)" name="navigation_params_file"
+    default="$(find-pkg-share leo_nav)/config/navigation_stereo_camera.yaml"
+    description="Stereo-camera-based navigation config" />
+
+  <include unless="$(var localization)"
+    file="$(find-pkg-share leo_nav)/launch/slam_toolbox.launch.py">
+    <arg name="params_file" value="$(var slam_params_file)" />
+  </include>
+
+  <include if="$(var localization)"
+    file="$(find-pkg-share leo_nav)/launch/amcl.launch.py">
+    <arg name="params_file" value="$(var amcl_params_file)" />
+    <arg name="map_file" value="$(var map_file)" />
+  </include>
+
+  <node_container namespace=""
+    name="navigation_container"
+    pkg="rclcpp_components"
+    exec="component_container_isolated">
+    <param from="$(var navigation_params_file)" />
+
+    <composable_node if="$(var use_stereo_camera)"
+      name="pointcloud_xyz_node"
+      pkg="depth_image_proc"
+      plugin="depth_image_proc::PointCloudXyzNode">
+      <param name="queue_size" value="1" />
+      <remap from="/image_rect" to="/oak/stereo/image_raw" />
+      <remap from="/camera_info" to="/oak/stereo/camera_info" />
+      <remap from="points" to="/oak/points" />
+      <extra_arg name="use_intra_process_comms" value="true" />
+    </composable_node>
+
+    <composable_node name="planner_server"
+      pkg="nav2_planner"
+      plugin="nav2_planner::PlannerServer">
+      <extra_arg name="use_intra_process_comms" value="true" />
+      <param from="$(var navigation_params_file)" />
+    </composable_node>
+
+    <composable_node name="controller_server"
+      pkg="nav2_controller"
+      plugin="nav2_controller::ControllerServer">
+      <extra_arg name="use_intra_process_comms" value="true" />
+      <param from="$(var navigation_params_file)" />
+    </composable_node>
+
+    <composable_node name="bt_navigator"
+      pkg="nav2_bt_navigator"
+      plugin="nav2_bt_navigator::BtNavigator">
+      <param name="default_nav_to_pose_bt_xml"
+        value="$(find-pkg-share leo_nav)/config/behavior_trees/navigate_w_replanning_time.xml" />
+      <param name="default_nav_through_poses_bt_xml"
+        value="$(find-pkg-share leo_nav)/config/behavior_trees/navigate_w_replanning_time.xml" />
+      <param from="$(var navigation_params_file)" />
+    </composable_node>
+
+    <composable_node name="waypoint_follower"
+      pkg="nav2_waypoint_follower"
+      plugin="nav2_waypoint_follower::WaypointFollower">
+      <param from="$(var navigation_params_file)" />
+    </composable_node>
+
+    <composable_node name="lifecycle_manager_navigation"
+      pkg="nav2_lifecycle_manager"
+      plugin="nav2_lifecycle_manager::LifecycleManager">
+      <extra_arg name="use_intra_process_comms" value="true" />
+      <param from="$(var navigation_params_file)" />
+    </composable_node>
+  </node_container>
+</launch>

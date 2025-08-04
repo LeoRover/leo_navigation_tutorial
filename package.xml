@@ -1,25 +1,65 @@
 <?xml version="1.0"?>
-<package format="2">
-  <name>leo_navigation</name>
-  <version>0.3.0</version>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>leo_nav</name>
+  <version>1.1.0</version>
   <description>
-    This package provides LeoRover navigation.
+    This package provides navigation capabilities for Leo
   </description>
 
   <maintainer email="support@fictionlab.pl">Fictionlab</maintainer>
-  <author email="blazej@fictionlab.pl">Błażej Sowa</author>
-
+  
   <license>MIT</license>
 
-  <buildtool_depend>catkin</buildtool_depend>
+  <author email="janek@fictionlab.pl">Jan Hernas</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>nav2_bringup</exec_depend>
+  <exec_depend>nav2_bt_navigator</exec_depend>
+  <exec_depend>nav2_controller</exec_depend>
+  <exec_depend>nav2_planner</exec_depend>
+  <exec_depend>nav2_map_server</exec_depend>
+  <exec_depend>nav2_amcl</exec_depend>
+  <exec_depend>nav2_lifecycle_manager</exec_depend>
+  <exec_depend>nav2_costmap_2d</exec_depend>
+  <exec_depend>nav2_navfn_planner</exec_depend>
+  <exec_depend>nav2_dwb_controller</exec_depend>
+  <exec_depend>nav2_util</exec_depend>
+  <exec_depend>nav2_msgs</exec_depend>
+  <exec_depend>nav2_behavior_tree</exec_depend>
+  <exec_depend>nav2_waypoint_follower</exec_depend>
+
+  <exec_depend>dwb_core</exec_depend>
+  <exec_depend>dwb_plugins</exec_depend>
+  <exec_depend>slam_toolbox</exec_depend>
+
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>lifecycle_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+
+  <exec_depend>tf2</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>tf2_geometry_msgs</exec_depend>
+
+  <exec_depend>image_transport</exec_depend>
+  <exec_depend>cv_bridge</exec_depend>
+  <exec_depend>pcl_ros</exec_depend>
+  <exec_depend>pcl_conversions</exec_depend>
+
+  <exec_depend>ament_index_python</exec_depend>
   <exec_depend>robot_localization</exec_depend>
-  <exec_depend>imu_filter_madgwick</exec_depend>
-  <exec_depend>slam_gmapping</exec_depend>
-  <exec_depend>map_server</exec_depend>
-  <exec_depend>amcl</exec_depend>
-  <exec_depend>move_base</exec_depend>
-  <exec_depend>global_planner</exec_depend>
-  <exec_depend>twist_mux</exec_depend>
-  <exec_depend>gmapping</exec_depend>
+  <exec_depend>lifecycle_msgs</exec_depend>
+  <exec_depend>rclcpp</exec_depend>
+  <exec_depend>rclcpp_lifecycle</exec_depend>
+  <exec_depend>rclpy</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+    <architecture_independent/>
+  </export>
 
 </package>

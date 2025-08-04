@@ -1,0 +1,213 @@
+bt_navigator:
+  ros__parameters:
+    global_frame: "map"
+    robot_base_frame: "base_footprint"
+    odom_topic: "merged_odom"
+    bt_loop_duration: 10
+    filter_duration: 0.3
+    default_server_timeout: 20
+    wait_for_service_timeout: 1000
+    service_introspection_mode: "disabled"
+    navigators: ["navigate_to_pose", "navigate_through_poses"]
+    navigate_to_pose:
+      plugin: "nav2_bt_navigator::NavigateToPoseNavigator"
+      enable_groot_monitoring: false
+      groot_server_port: 1667
+    navigate_through_poses:
+      plugin: "nav2_bt_navigator::NavigateThroughPosesNavigator"
+      enable_groot_monitoring: false
+      groot_server_port: 1669
+
+controller_server:
+  ros__parameters:
+    odom_topic: "merged_odom"
+    enable_stamped_cmd_vel: false
+    controller_frequency: 10.0
+    min_x_velocity_threshold: 0.0001
+    min_y_velocity_threshold: 0.0001
+    min_theta_velocity_threshold: 0.01
+    failure_tolerance: 0.3
+    progress_checker_plugins: ["progress_checker"]
+    goal_checker_plugins: ["general_goal_checker"]
+    controller_plugins: ["FollowPath"]
+
+    progress_checker:
+      plugin: "nav2_controller::PoseProgressChecker"
+      required_movement_radius: 0.1
+      required_movement_angle: 0.25
+      movement_time_allowance: 5.0
+
+    general_goal_checker:
+      stateful: false
+      plugin: "nav2_controller::SimpleGoalChecker"
+      xy_goal_tolerance: 0.20
+      yaw_goal_tolerance: 0.30
+
+    #DWB
+    FollowPath:
+      plugin: "dwb_core::DWBLocalPlanner"
+      debug_trajectory_details: true
+      min_vel_x: 0.0
+      min_vel_y: 0.0
+      max_vel_x: 0.26
+      max_vel_y: 0.0
+      max_vel_theta: 0.85
+      min_speed_xy: 0.10
+      max_speed_xy: 0.26
+      min_speed_theta: 0.15
+      acc_lim_x: 2.5
+      acc_lim_y: 0.0
+      acc_lim_theta: 3.2
+      decel_lim_x: -2.5
+      decel_lim_y: 0.0
+      decel_lim_theta: -3.2
+      vx_samples: 20
+      vy_samples: 5
+      vtheta_samples: 20
+      linear_granularity: 0.05
+      angular_granularity: 0.017
+      transform_tolerance: 0.5
+      xy_goal_tolerance: 0.25
+      short_circuit_trajectory_evaluation: true
+      limit_vel_cmd_in_traj: false
+      stateful: false
+      critics: ["RotateToGoal", "Oscillation", "BaseObstacle", "GoalAlign", "PathAlign", "PathDist", "GoalDist"]
+      BaseObstacle.scale: 0.2
+      PathAlign.scale: 32.0
+      GoalAlign.scale: 4.0
+      PathAlign.forward_point_distance: 0.325
+      GoalAlign.forward_point_distance: 0.325
+      PathDist.scale: 32.0
+      GoalDist.scale: 4.0
+      RotateToGoal.scale: 32.0
+      RotateToGoal.slowing_factor: 1.0
+      RotateToGoal.lookahead_time: -1.0
+
+global_costmap:
+  global_costmap:
+    ros__parameters:
+      height: 20
+      width: 20
+      origin_x: -10.0
+      origin_y: -10.0
+      resolution: 0.05
+      rolling_window: false
+      trinary_costmap: true
+      unknown_cost_value: 255
+      lethal_cost_threshold: 100
+      track_unknown_space: true
+      always_send_full_costmap: true
+      use_maximum: false
+
+      global_frame: "map"
+      robot_base_frame: "base_footprint"
+      transform_tolerance: 0.5
+      footprint_padding: 0.01
+      footprint: "[[0.22, 0.22], [0.22, -0.22], [-0.22, -0.22], [-0.22, 0.22]]"
+
+      publish_frequency: 1.0
+      update_frequency: 1.0
+
+      use_sim_time: false
+
+      plugins: ["static_layer", "denoise_layer", "inflation_layer"]
+
+      static_layer:
+        plugin: "nav2_costmap_2d::StaticLayer"
+        map_topic: "/map"
+        map_subscribe_transient_local: true
+        enabled: true
+        subscribe_to_updates: true
+        transform_tolerance: 0.5
+      denoise_layer:
+        plugin: "nav2_costmap_2d::DenoiseLayer"
+        enabled: True
+
+      inflation_layer:
+        plugin: "nav2_costmap_2d::InflationLayer"
+        cost_scaling_factor: 5.0
+        inflation_radius: 0.27
+
+local_costmap:
+  local_costmap:
+    ros__parameters:
+      height: 6
+      width: 6
+      resolution: 0.05
+      rolling_window: true
+      trinary_costmap: true
+      unknown_cost_value: 255
+      lethal_cost_threshold: 100
+      track_unknown_space: false
+      always_send_full_costmap: true
+      use_maximum: false
+
+      global_frame: "odom"
+      robot_base_frame: "base_footprint"
+      transform_tolerance: 0.5
+      footprint_padding: 0.01
+      footprint: "[[0.22, 0.22], [0.22, -0.22], [-0.22, -0.22], [-0.22, 0.22]]"
+
+      update_frequency: 3.0
+      publish_frequency: 1.0
+
+      use_sim_time: false
+
+      plugins: ["obstacle_layer", "denoise_layer", "inflation_layer"]
+
+      obstacle_layer:
+        plugin: "nav2_costmap_2d::ObstacleLayer"
+        enabled: true
+        footprint_clearing_enabled: true 
+        observation_sources: scan
+        combination_method: 1
+        scan:
+          topic: "/scan"
+          max_obstacle_height: 2.0
+          clearing: true
+          marking: true
+          data_type: "LaserScan"
+          raytrace_max_range: 10.0
+          raytrace_min_range: 0.15
+          obstacle_max_range: 10.0
+          obstacle_min_range: 0.15
+
+      denoise_layer:
+        plugin: "nav2_costmap_2d::DenoiseLayer"
+        enabled: true
+
+      inflation_layer:
+        plugin: "nav2_costmap_2d::InflationLayer"
+        cost_scaling_factor: 5.0
+        inflation_radius: 0.27
+
+planner_server:
+  ros__parameters:
+    planner_plugins: ['GridBased']
+    GridBased:
+      plugin: 'nav2_navfn_planner::NavfnPlanner'
+      use_astar: true
+      allow_unknown: false
+      tolerance: 0.2
+
+waypoint_follower:
+  ros__parameters:
+    stop_on_failure: true
+    loop_rate: 10
+    waypoint_task_executor_plugin: "wait_at_waypoint"
+    wait_at_waypoint:
+      plugin: "nav2_waypoint_follower::WaitAtWaypoint"
+      enabled: true
+      waypoint_pause_duration: 1000
+
+lifecycle_manager_navigation:
+  ros__parameters:
+    autostart: true
+    node_names:
+      - "planner_server"
+      - "controller_server"
+      - "bt_navigator"
+      - "waypoint_follower"
+    bond_timeout: 4.0
+    attempt_respawn_reconnection: true
+    bond_respawn_max_duration: 10.0

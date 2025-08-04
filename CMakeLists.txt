@@ -1,14 +1,14 @@
-cmake_minimum_required(VERSION 3.0.2)
-project(leo_navigation)
+cmake_minimum_required(VERSION 3.5)
+project(leo_nav)
 
-find_package(catkin REQUIRED)
-
-catkin_package()
+find_package(ament_cmake REQUIRED)
 
 install(
   DIRECTORY
     config
     launch
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+    maps
+  DESTINATION share/${PROJECT_NAME}
 )
 
+ament_package()

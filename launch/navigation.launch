@@ -1,6 +1,0 @@
-<launch>
-
-  <include file="$(find leo_navigation)/launch/twist_mux.launch" />
-  <include file="$(find leo_navigation)/launch/move_base.launch" />
-
-</launch>
