@@ -15,6 +15,7 @@ from lifecycle_msgs.msg import Transition
 def generate_launch_description():
     params_file = LaunchConfiguration('params_file')
     map_file = LaunchConfiguration('map_file')
+    scan_topic = LaunchConfiguration('scan_topic')
 
     declare_params_file_cmd = DeclareLaunchArgument(
         'params_file',
@@ -29,8 +30,16 @@ def generate_launch_description():
         description='Full path to the map YAML file to load (required for AMCL)',
     )
 
+    declare_scan_topic_cmd = DeclareLaunchArgument(
+        'scan_topic',
+        default_value='/scan',
+        description='Topic for laser scan data')
+
     start_amcl_node = LifecycleNode(
         parameters=[params_file],
+        remappings=[
+            ('/scan', scan_topic),
+        ],
         package='nav2_amcl',
         executable='amcl',
         name='amcl_node',
@@ -99,6 +108,7 @@ def generate_launch_description():
 
     ld.add_action(declare_params_file_cmd)
     ld.add_action(declare_map_file_cmd)
+    ld.add_action(declare_scan_topic_cmd)
     ld.add_action(start_amcl_node)
     ld.add_action(start_map_server_node)
     ld.add_action(configure_map_server)
