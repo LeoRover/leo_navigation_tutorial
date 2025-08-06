@@ -28,15 +28,39 @@
     default="$(find-pkg-share leo_nav)/config/navigation_stereo_camera.yaml"
     description="Stereo-camera-based navigation config" />
 
+  <arg name="scan_topic" 
+    default="/scan"
+    description="Topic for laser scan data" />
+
+  <arg name="pointcloud_topic" 
+    default="/oak/points"
+    description="Topic for point cloud data" />
+
+  <arg name="depth_image_topic" 
+    default="/oak/stereo/image_raw"
+    description="Topic for depth image data" />
+
+  <arg name="depth_camera_info_topic" 
+    default="/oak/stereo/camera_info"
+    description="Topic for depth camera info data" />
+
+  <set_remap from="/scan" to="$(var scan_topic)" />
+  <set_remap from="/oak/points" to="$(var pointcloud_topic)" />
+  <set_remap from="/points" to="$(var pointcloud_topic)" />
+  <set_remap from="/image_rect" to="$(var depth_image_topic)" />
+  <set_remap from="/camera_info" to="$(var depth_camera_info_topic)" />
+
   <include unless="$(var localization)"
     file="$(find-pkg-share leo_nav)/launch/slam_toolbox.launch.py">
     <arg name="params_file" value="$(var slam_params_file)" />
+    <arg name="scan_topic" value="$(var scan_topic)" />
   </include>
 
   <include if="$(var localization)"
     file="$(find-pkg-share leo_nav)/launch/amcl.launch.py">
     <arg name="params_file" value="$(var amcl_params_file)" />
     <arg name="map_file" value="$(var map_file)" />
+    <arg name="scan_topic" value="$(var scan_topic)" />
   </include>
 
   <node_container namespace=""
@@ -50,9 +74,6 @@
       pkg="depth_image_proc"
       plugin="depth_image_proc::PointCloudXyzNode">
       <param name="queue_size" value="1" />
-      <remap from="/image_rect" to="/oak/stereo/image_raw" />
-      <remap from="/camera_info" to="/oak/stereo/camera_info" />
-      <remap from="points" to="/oak/points" />
       <extra_arg name="use_intra_process_comms" value="true" />
     </composable_node>
 
